@@ -23,7 +23,6 @@ for i in range(4):
   img = scale_img(img, constants.SCALE)
   animation_list.append(img)
 
-
 player = Character(100, 100, animation_list)
 
 run = True
@@ -32,7 +31,7 @@ while run:
   screen.fill(constants.BG)
   dx = 0
   dy = 0
-  player.draw(screen)
+  
   if moving_right == True:
     dx = constants.SPEED
   if moving_left == True:
@@ -41,9 +40,11 @@ while run:
     dy = -constants.SPEED
   if moving_down == True:
     dy = constants.SPEED
-
+  
   player.move(dx, dy)
-
+  player.update()
+  player.draw(screen)
+  
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       run = False
