@@ -44,6 +44,15 @@ while run:
         moving_up = True
       if event.key == pygame.K_a:
         moving_down = True
+    if event.type == pygame.KEYUP:
+      if event.key == pygame.K_o:
+        moving_left = False
+      if event.key == pygame.K_p:
+        moving_right = False
+      if event.key == pygame.K_q:
+        moving_up = False
+      if event.key == pygame.K_a:
+        moving_down = False
   
   pygame.display.update()
 
