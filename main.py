@@ -5,6 +5,7 @@ from character import Character
 pygame.init()
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 pygame.display.set_caption('The Labyrinth')
+clock = pygame.time.Clock()
 
 moving_left = False
 moving_right = False
@@ -15,6 +16,8 @@ player = Character(100, 100)
 
 run = True
 while run:
+  clock.tick(constants.FPS)
+  screen.fill(constants.BG)
   dx = 0
   dy = 0
   player.draw(screen)
@@ -26,6 +29,8 @@ while run:
     dy = -5
   if moving_down == True:
     dy = 5
+
+  player.move(dx, dy)
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:

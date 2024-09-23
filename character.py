@@ -7,7 +7,8 @@ class Character():
     self.rect.center = (x, y)
 
   def move(self, dx, dy):
-    pass
+    self.rect.x += dx
+    self.rect.y += dy
 
   def draw(self, surface): 
     pygame.draw.rect(surface, constants.ORANGE, self.rect)
