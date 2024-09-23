@@ -10,8 +10,12 @@ player = Character(100, 100)
 
 run = True
 while run:
+  player.draw(screen)
+
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       run = False
+  
+  pygame.display.update()
 
 pygame.quit()
