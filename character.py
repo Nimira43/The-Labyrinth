@@ -3,7 +3,8 @@ import math
 import constants
 
 class Character():
-  def __init__(self, x, y):
+  def __init__(self, x, y, image):
+    self.image = image
     self.rect = pygame.Rect(0, 0, 40, 40)
     self.rect.center = (x, y)
 
@@ -15,4 +16,5 @@ class Character():
     self.rect.y += dy
 
   def draw(self, surface): 
-    pygame.draw.rect(surface, constants.ORANGE, self.rect)
+    surface.blit(self.image, self.rect)
+    pygame.draw.rect(surface, constants.ORANGE, self.rect, 1)
