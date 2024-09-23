@@ -4,6 +4,7 @@ import constants
 
 class Character():
   def __init__(self, x, y, image):
+    self.flip 
     self.image = image
     self.rect = pygame.Rect(0, 0, 40, 40)
     self.rect.center = (x, y)
