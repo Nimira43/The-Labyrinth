@@ -8,7 +8,7 @@ class Character():
     self.animation_list = animation_list
     self.frame_index = 0
     self.update_time = pygame.time.get_ticks()
-    self.image = animation_list[self.frame_index]
+    self.image = animation_list[0][self.frame_index]
     self.rect = pygame.Rect(0, 0, 40, 40)
     self.rect.center = (x, y)
 
@@ -25,12 +25,12 @@ class Character():
 
   def update(self):
     animation_cooldown = 70
-    self.image = self.animation_list[self.frame_index]
+    self.image = self.animation_list[0][self.frame_index]
     
     if pygame.time.get_ticks() - self.update_time > animation_cooldown:
       self.frame_index += 1
       self.update_time = pygame.time.get_ticks()
-    if self.frame_index >= len(self.animation_list):
+    if self.frame_index >= len(self.animation_list[0]):
       self.frame_index = 0
 
   def draw(self, surface): 
