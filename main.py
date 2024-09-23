@@ -17,9 +17,14 @@ def scale_img(image, scale):
   h = image.get_height()
   return pygame.transform.scale(image, (w * scale, h * scale))
 
-player_image = pygame.image.load('./assets/images/characters/elf/idle/0.png').convert_alpha()
-player_image = scale_img(player_image, constants.SCALE)
-player = Character(100, 100, player_image)
+animation_list = []
+for i in range(4):
+  img = pygame.image.load(f"assets/images/characters/elf/idle/{i}.png").convert_alpha()
+  img = scale_img(img, constants.SCALE)
+  animation_list.append(img)
+
+
+player = Character(100, 100, animation_list)
 
 run = True
 while run:

@@ -3,9 +3,9 @@ import math
 import constants
 
 class Character():
-  def __init__(self, x, y, image):
+  def __init__(self, x, y, animation_list):
     self.flip = False
-    self.image = image
+    self.image = animation_list[0]
     self.rect = pygame.Rect(0, 0, 40, 40)
     self.rect.center = (x, y)
 
