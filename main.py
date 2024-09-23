@@ -22,13 +22,13 @@ while run:
   dy = 0
   player.draw(screen)
   if moving_right == True:
-    dx = 5
+    dx = constants.SPEED
   if moving_left == True:
-    dx = -5
+    dx = -constants.SPEED
   if moving_up == True:
-    dy = -5
+    dy = -constants.SPEED
   if moving_down == True:
-    dy = 5
+    dy = constants.SPEED
 
   player.move(dx, dy)
 
