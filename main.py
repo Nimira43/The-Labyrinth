@@ -17,6 +17,9 @@ def scale_img(image, scale):
   h = image.get_height()
   return pygame.transform.scale(image, (w * scale, h * scale))
 
+mob_animations = []
+mob_types = ['elf', 'imp', 'skeleton', 'goblin', 'muddy', 'tiny_zombie', 'big_demon']
+
 animation_types = ["idle", "run"]
 animation_list = []
 
