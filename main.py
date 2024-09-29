@@ -118,7 +118,7 @@ damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
 item_group = pygame.sprite.Group()
 
-score_coin = Item(constants.SCREEN_WIDTH - 115, 23, 0, coin_images)
+score_coin = Item(constants.SCREEN_WIDTH - 115, 23, 0, coin_images, True)
 item_group.add(score_coin)
 potion = Item(200, 200, 1, [red_potion])
 item_group.add(potion)
@@ -157,7 +157,7 @@ while run:
       damage_text = DamageText(damage_pos.centerx, damage_pos.y, str(damage), constants.RED)
       damage_text_group.add(damage_text)
   damage_text_group.update()
-  item_group.update(player)
+  item_group.update(screen_scroll, player)
   
   world.draw(screen)
   for enemy in enemy_list:
