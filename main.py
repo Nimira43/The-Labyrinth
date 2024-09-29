@@ -63,9 +63,13 @@ while run:
   arrow = bow.update(player)
   if arrow:
     arrow_group.add(arrow)
-    print(arrow_group)
+  for arrow in arrow_group:
+    arrow.update()
+  
   player.draw(screen)
   bow.draw(screen)
+  for arrow in arrow_group:
+    arrow.draw(screen)
   
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
