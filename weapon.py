@@ -1,5 +1,6 @@
 import pygame
 import math
+import random
 import constants
 
 class Weapon():
@@ -21,7 +22,7 @@ class Weapon():
     y_dist = -(pos[1] - self.rect.centery)
     self.angle = math.degrees(math.atan2(y_dist, x_dist))
 
-    if pygame.mouse.get_pressed()[0] and self.fired == False and (pygame.time.get_ticks() - self.lastshot) >= shot_cooldown:
+    if pygame.mouse.get_pressed()[0] and self.fired == False and (pygame.time.get_ticks() - self.last_shot) >= shot_cooldown:
       arrow = Arrow(self.arrow_image, self.rect.centerx, self.rect.centery, self.angle)
       self.fired = True
       self.last_shot = pygame.time.get_ticks()  
@@ -47,11 +48,17 @@ class Arrow(pygame.sprite.Sprite):
     self.dx = math.cos(math.radians(self.angle)) * constants.ARROW_SPEED
     self.dy = -(math.sin(math.radians(self.angle)) * constants.ARROW_SPEED)
 
-  def update(self):
+  def update(self, enemy_list):
     self.rect.x += self.dx
     self.rect.y += self.dy
     if self.rect.right < 0 or self.rect.left > constants.SCREEN_WIDTH or self.rect.bottom < 0 or self.rect.top > constants.SCREEN_HEIGHT:
       self.kill()
+    for enemy in enemy_list:
+      if enemy.rect.colliderect(self.rect):
+        damage = 10 + random.randint(-5, 5)
+        enemy.health -= damage
+        self.kill()
+        break    
 
   def draw(self, surface):
     surface.blit(self.image, ((self.rect.centerx - int(self.image.get_width() / 2)), self.rect.centery - int(self.image.get_height() / 2)))
