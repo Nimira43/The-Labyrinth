@@ -45,13 +45,16 @@ class DamageText(pygame.sprite.Sprite):
     self.image = font.render(damage, True, colour)
     self.rect = self.image.get_rect()
     self.rect.center = (x, y)
+    self.counter = 0
 
   def update(self):
     self.rect.y -= 1
+    self.counter += 1
+    if self.counter > 30:
+      self.kill()
 
 player = Character(100, 100, 100, mob_animations, 0)
 enemy = Character(200, 300, 100, mob_animations, 1)
-
 bow = Weapon(bow_image, arrow_image)
 
 enemy_list = []
