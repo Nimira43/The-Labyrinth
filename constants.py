@@ -8,7 +8,7 @@ SPEED = 5
 ARROW_SPEED = 10
 OFFSET = 12
 
-ORANGE = (147, 203, 222)
+ORANGE = (255, 120, 0)
 RED = (255, 0, 0)
-BG = (10, 10, 10)
-PANEL = (255, 150, 0)
+BG = (30, 30, 30)
+PANEL = (0, 0, 0)

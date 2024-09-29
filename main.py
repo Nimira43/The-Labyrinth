@@ -44,6 +44,7 @@ for mob in mob_types:
 
 def draw_info():
   pygame.draw.rect(screen, constants.PANEL, (0, 0, constants.SCREEN_WIDTH, 50))
+  pygame.draw.line(screen, constants.ORANGE, (0, 50), (constants.SCREEN_WIDTH, 50))
   half_heart_drawn = False
   for i in range(5):
     if player.health >= ((i + 1) * 20):
