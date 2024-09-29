@@ -11,7 +11,16 @@ class Item(pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.center = (x, y)
   
-  def update(self):
+  def update(self, player):
+    if self.rect.colliderect(player.rect):
+      if self.item_type == 0:
+        player.score += 1
+      elif self.item_type == 1:
+        player.health += 10
+        if player.health > 100:
+          player.health = 100
+      self.kill()
+
     animation_cooldown = 150
     self.image = self.animation_list[self.frame_index]
     
