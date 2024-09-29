@@ -54,7 +54,7 @@ class Arrow(pygame.sprite.Sprite):
     if self.rect.right < 0 or self.rect.left > constants.SCREEN_WIDTH or self.rect.bottom < 0 or self.rect.top > constants.SCREEN_HEIGHT:
       self.kill()
     for enemy in enemy_list:
-      if enemy.rect.colliderect(self.rect):
+      if enemy.rect.colliderect(self.rect) and enemy.alive:
         damage = 10 + random.randint(-5, 5)
         enemy.health -= damage
         self.kill()

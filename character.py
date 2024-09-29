@@ -33,6 +33,10 @@ class Character():
     self.rect.y += dy
 
   def update(self):
+    if self.health <= 0:
+      self.health  = 0
+      self.alive = False
+      
     if self.running == True:
       self.update_action(1)
     else:
