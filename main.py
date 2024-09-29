@@ -19,6 +19,7 @@ def scale_img(image, scale):
   return pygame.transform.scale(image, (w * scale, h * scale))
 
 bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png").convert_alpha(), constants.WEAPON_SCALE)
+arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png").convert_alpha(), constants.WEAPON_SCALE)
 
 mob_animations = []
 mob_types = ['elf', 'imp', 'skeleton', 'goblin', 'muddy', 'tiny_zombie', 'big_demon']
@@ -37,7 +38,8 @@ for mob in mob_types:
   mob_animations.append(animation_list)
 
 player = Character(100, 100, mob_animations, 0)
-bow = Weapon(bow_image)
+bow = Weapon(bow_image, arrow_image)
+arrow_group = pygame.sprite.Group()
 
 run = True
 while run:
@@ -58,8 +60,10 @@ while run:
   player.move(dx, dy)
   
   player.update()
-  bow.update(player)
-
+  arrow = bow.update(player)
+  if arrow:
+    arrow_group.add(arrow)
+    print(arrow_group)
   player.draw(screen)
   bow.draw(screen)
   
@@ -67,22 +71,22 @@ while run:
     if event.type == pygame.QUIT:
       run = False
     if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_o:
-        moving_left = True
-      if event.key == pygame.K_p:
-        moving_right = True
-      if event.key == pygame.K_q:
-        moving_up = True
       if event.key == pygame.K_a:
+        moving_left = True
+      if event.key == pygame.K_d:
+        moving_right = True
+      if event.key == pygame.K_w:
+        moving_up = True
+      if event.key == pygame.K_s:
         moving_down = True
     if event.type == pygame.KEYUP:
-      if event.key == pygame.K_o:
-        moving_left = False
-      if event.key == pygame.K_p:
-        moving_right = False
-      if event.key == pygame.K_q:
-        moving_up = False
       if event.key == pygame.K_a:
+        moving_left = False
+      if event.key == pygame.K_d:
+        moving_right = False
+      if event.key == pygame.K_w:
+        moving_up = False
+      if event.key == pygame.K_s:
         moving_down = False
   
   pygame.display.update()
