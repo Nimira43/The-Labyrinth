@@ -47,6 +47,10 @@ class Character():
         screen_scroll[1] = constants.SCROLL_THRESH - self.rect.top
         self.rect.top = constants.SCROLL_THRESH
     return screen_scroll 
+  
+  def ai(self, screen_scroll):
+    self.rect.x += screen_scroll[0]
+    self.rect.y += screen_scroll[1]
 
   def update(self):
     if self.health <= 0:

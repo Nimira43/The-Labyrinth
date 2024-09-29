@@ -103,13 +103,15 @@ class DamageText(pygame.sprite.Sprite):
     self.counter = 0
 
   def update(self):
+    self.rect.x += screen_scroll[0]
+    self.rect.y += screen_scroll[1]
     self.rect.y -= 1
     self.counter += 1
     if self.counter > 30:
       self.kill()
 
 player = Character(400, 300, 100, mob_animations, 0)
-enemy = Character(200, 300, 100, mob_animations, 1)
+enemy = Character(300, 300, 100, mob_animations, 1)
 bow = Weapon(bow_image, arrow_image)
 
 enemy_list = []
@@ -141,18 +143,17 @@ while run:
   if moving_down == True:
     dy = constants.SPEED
   
-  screen_scroll = player.move(dx, dy)
-  print(screen_scroll)
-  
+  screen_scroll = player.move(dx, dy)  
   world.update(screen_scroll)
   for enemy in enemy_list:
+    enemy.ai(screen_scroll)
     enemy.update()
   player.update()
   arrow = bow.update(player)
   if arrow:
     arrow_group.add(arrow)
   for arrow in arrow_group:
-    damage, damage_pos = arrow.update(enemy_list)
+    damage, damage_pos = arrow.update(screen_scroll, enemy_list)
     if damage:
       damage_text = DamageText(damage_pos.centerx, damage_pos.y, str(damage), constants.RED)
       damage_text_group.add(damage_text)
