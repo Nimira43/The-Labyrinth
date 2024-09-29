@@ -2,6 +2,7 @@ import pygame
 import constants
 from character import Character
 from weapon import Weapon
+from items import Item
 
 pygame.init()
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
@@ -23,6 +24,14 @@ def scale_img(image, scale):
 heart_empty = scale_img(pygame.image.load("assets/images/items/heart_empty.png").convert_alpha(), constants.ITEM_SCALE)
 heart_half = scale_img(pygame.image.load("assets/images/items/heart_half.png").convert_alpha(), constants.ITEM_SCALE)
 heart_full = scale_img(pygame.image.load("assets/images/items/heart_full.png").convert_alpha(), constants.ITEM_SCALE)
+
+coin_images = []
+for x in range(4):
+  img = scale_img(pygame.image.load(f"assets/images/items/coin_f{x}.png").convert_alpha(), constants.ITEM_SCALE)
+  coin_images.append(img)
+
+red_potion = scale_img(pygame.image.load("assets/images/items/potion_red.png").convert_alpha(), constants.POTION_SCALE)
+
 bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png").convert_alpha(), constants.WEAPON_SCALE)
 arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png").convert_alpha(), constants.WEAPON_SCALE)
 
@@ -78,6 +87,12 @@ enemy_list = []
 enemy_list.append(enemy)
 damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
+item_group = pygame.sprite.Group()
+
+potion = Item(200, 200, 1, [red_potion])
+item_group.add(potion)
+coin = Item(400, 400, 0, coin_images)
+item_group.add(coin)
 
 run = True
 while run:
@@ -109,6 +124,7 @@ while run:
       damage_text = DamageText(damage_pos.centerx, damage_pos.y, str(damage), constants.RED)
       damage_text_group.add(damage_text)
   damage_text_group.update()
+  item_group.update()
   
   for enemy in enemy_list:
     enemy.draw(screen)
@@ -117,6 +133,7 @@ while run:
   for arrow in arrow_group:
     arrow.draw(screen)
   damage_text_group.draw(screen)
+  item_group.draw(screen)
   draw_info()
 
   for event in pygame.event.get():
