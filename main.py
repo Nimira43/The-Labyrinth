@@ -18,7 +18,7 @@ def scale_img(image, scale):
   h = image.get_height()
   return pygame.transform.scale(image, (w * scale, h * scale))
 
-bow_image = pygame.image.load("assets/images/weapons/bow.png").convert_alpha()
+bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png").convert_alpha(), constants.WEAPON_SCALE)
 
 mob_animations = []
 mob_types = ['elf', 'imp', 'skeleton', 'goblin', 'muddy', 'tiny_zombie', 'big_demon']
