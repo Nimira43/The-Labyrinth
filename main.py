@@ -1,13 +1,16 @@
 import pygame
+import csv
 import constants
 from character import Character
 from weapon import Weapon
 from items import Item
+from world import World
 
 pygame.init()
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 pygame.display.set_caption('The Labyrinth')
 clock = pygame.time.Clock()
+level = 1
 
 moving_left = False
 moving_right = False
@@ -34,6 +37,12 @@ red_potion = scale_img(pygame.image.load("assets/images/items/potion_red.png").c
 
 bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png").convert_alpha(), constants.WEAPON_SCALE)
 arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png").convert_alpha(), constants.WEAPON_SCALE)
+
+tile_list = []
+for x in range(constants.TILE_TYPES):
+  tile_image = pygame.image.load(f"assets/images/tiles/{x}.png").convert_alpha()
+  tile_image = pygame.transform.scale(tile_image, (constants.TILE_SIZE, constants.TILE_SIZE))
+  tile_list.append(tile_image)
 
 mob_animations = []
 mob_types = ['elf', 'imp', 'skeleton', 'goblin', 'muddy', 'tiny_zombie', 'big_demon']
@@ -68,6 +77,21 @@ def draw_info():
     else:
       screen.blit(heart_empty, (10 + i * 50, 0))
   draw_text(f"X{player.score}", font, constants.ORANGE, constants.SCREEN_WIDTH - 100, 15)
+
+world_data = []
+for row in range(constants.ROWS):
+  r = [-1] * constants.COLS
+  world_data.append(r)
+
+with open(f"levels/level{level}_data.csv", newline="") as csvfile:
+  reader = csv.reader(csvfile, delimiter = ",")
+  for x, row in enumerate(reader):
+    for y, tile in enumerate(row):
+      world_data[x][y] = int(tile)
+
+world = World()
+world.process_data(world_data, tile_list)
+
 
 class DamageText(pygame.sprite.Sprite):
   def __init__(self, x, y, damage, colour):
@@ -132,6 +156,7 @@ while run:
   damage_text_group.update()
   item_group.update(player)
   
+  world.draw(screen)
   for enemy in enemy_list:
     enemy.draw(screen)
   player.draw(screen)
