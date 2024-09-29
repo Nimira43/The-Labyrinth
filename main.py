@@ -13,6 +13,8 @@ moving_right = False
 moving_up = False
 moving_down = False
 
+font = pygame.font.Font('assets/fonts/AtariClassic.ttf', 20)
+
 def scale_img(image, scale):
   w = image.get_width()
   h = image.get_height()
@@ -37,6 +39,13 @@ for mob in mob_types:
     animation_list.append(temp_list)
   mob_animations.append(animation_list)
 
+class DamageText(pygame.sprite.Sprite):
+  def __init__(self, x, y, damage, color):
+    pygame.sprite.Sprite.__init__(self)
+    self.image = font.render(damage, True, color)
+    self.rect = self.image.get_rect()
+    self.rect.center = (x, y)
+
 player = Character(100, 100, 100, mob_animations, 0)
 enemy = Character(200, 300, 100, mob_animations, 1)
 
@@ -44,7 +53,11 @@ bow = Weapon(bow_image, arrow_image)
 
 enemy_list = []
 enemy_list.append(enemy)
+damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
+
+damage_text = DamageText(300, 400, "15", constants.RED)
+damage_text_group.add(damage_text)
 
 run = True
 while run:
@@ -72,6 +85,7 @@ while run:
     arrow_group.add(arrow)
   for arrow in arrow_group:
     arrow.update(enemy_list)
+  damage_text_group.update()
   
   for enemy in enemy_list:
     enemy.draw(screen)
@@ -79,6 +93,8 @@ while run:
   bow.draw(screen)
   for arrow in arrow_group:
     arrow.draw(screen)
+  damage_text_group.draw(screen)
+
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:

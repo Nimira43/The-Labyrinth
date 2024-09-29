@@ -8,4 +8,5 @@ ARROW_SPEED = 10
 OFFSET = 12
 
 ORANGE = (255, 120, 0)
+RED = (255, 0, 0)
 BG = (40, 25, 25)
