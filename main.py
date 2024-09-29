@@ -1,6 +1,7 @@
 import pygame
 import constants
 from character import Character
+from weapon import Weapon
 
 pygame.init()
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
@@ -17,6 +18,8 @@ def scale_img(image, scale):
   h = image.get_height()
   return pygame.transform.scale(image, (w * scale, h * scale))
 
+bow_image = pygame.image.load("assets/images/weapons/bow.png").convert_alpha()
+
 mob_animations = []
 mob_types = ['elf', 'imp', 'skeleton', 'goblin', 'muddy', 'tiny_zombie', 'big_demon']
 
@@ -32,7 +35,9 @@ for mob in mob_types:
       temp_list.append(img)
     animation_list.append(temp_list)
   mob_animations.append(animation_list)
-player = Character(100, 100, mob_animations, 6)
+
+player = Character(100, 100, mob_animations, 0)
+bow = Weapon(bow_image)
 
 run = True
 while run:
@@ -51,8 +56,12 @@ while run:
     dy = constants.SPEED
   
   player.move(dx, dy)
+  
   player.update()
+  bow.update(player)
+
   player.draw(screen)
+  bow.draw(screen)
   
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
