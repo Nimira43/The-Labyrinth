@@ -40,11 +40,14 @@ for mob in mob_types:
   mob_animations.append(animation_list)
 
 class DamageText(pygame.sprite.Sprite):
-  def __init__(self, x, y, damage, color):
+  def __init__(self, x, y, damage, colour):
     pygame.sprite.Sprite.__init__(self)
-    self.image = font.render(damage, True, color)
+    self.image = font.render(damage, True, colour)
     self.rect = self.image.get_rect()
     self.rect.center = (x, y)
+
+  def update(self):
+    self.rect.y -= 1
 
 player = Character(100, 100, 100, mob_animations, 0)
 enemy = Character(200, 300, 100, mob_animations, 1)
@@ -55,9 +58,6 @@ enemy_list = []
 enemy_list.append(enemy)
 damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
-
-damage_text = DamageText(300, 400, "15", constants.RED)
-damage_text_group.add(damage_text)
 
 run = True
 while run:
@@ -84,7 +84,10 @@ while run:
   if arrow:
     arrow_group.add(arrow)
   for arrow in arrow_group:
-    arrow.update(enemy_list)
+    damage, damage_pos = arrow.update(enemy_list)
+    if damage:
+      damage_text = DamageText(damage_pos.centerx, damage_pos.y, str(damage), constants.RED)
+      damage_text_group.add(damage_text)
   damage_text_group.update()
   
   for enemy in enemy_list:
