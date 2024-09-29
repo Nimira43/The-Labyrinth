@@ -43,9 +43,17 @@ for mob in mob_types:
   mob_animations.append(animation_list)
 
 def draw_info():
+  pygame.draw.rect(screen, constants.PANEL, (0, 0, constants.SCREEN_WIDTH, 50))
+  half_heart_drawn = False
   for i in range(5):
     if player.health >= ((i + 1) * 20):
       screen.blit(heart_full, (10 + i * 50, 0))
+    elif (player.health % 20 > 0) and half_heart_drawn == False: 
+      screen.blit(heart_half, (10 + i * 50, 0))
+      half_heart_drawn = True
+    else:
+      screen.blit(heart_empty, (10 + i * 50, 0))
+      
 
 class DamageText(pygame.sprite.Sprite):
   def __init__(self, x, y, damage, colour):
