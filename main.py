@@ -20,6 +20,9 @@ def scale_img(image, scale):
   h = image.get_height()
   return pygame.transform.scale(image, (w * scale, h * scale))
 
+heart_empty = scale_img(pygame.image.load("assets/images/items/heart_empty.png").convert_alpha(), constants.ITEM_SCALE)
+heart_half = scale_img(pygame.image.load("assets/images/items/heart_half.png").convert_alpha(), constants.ITEM_SCALE)
+heart_full = scale_img(pygame.image.load("assets/images/items/heart_full.png").convert_alpha(), constants.ITEM_SCALE)
 bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png").convert_alpha(), constants.WEAPON_SCALE)
 arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png").convert_alpha(), constants.WEAPON_SCALE)
 
@@ -38,6 +41,11 @@ for mob in mob_types:
       temp_list.append(img)
     animation_list.append(temp_list)
   mob_animations.append(animation_list)
+
+def draw_info():
+  for i in range(5):
+    if player.health >= ((i + 1) * 20):
+      screen.blit(heart_full, (10 + i * 50, 0))
 
 class DamageText(pygame.sprite.Sprite):
   def __init__(self, x, y, damage, colour):
@@ -100,7 +108,7 @@ while run:
   for arrow in arrow_group:
     arrow.draw(screen)
   damage_text_group.draw(screen)
-
+  draw_info()
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
