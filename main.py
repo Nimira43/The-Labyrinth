@@ -11,6 +11,7 @@ screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGH
 pygame.display.set_caption('The Labyrinth')
 clock = pygame.time.Clock()
 level = 1
+screen_scroll = [0, 0]
 
 moving_left = False
 moving_right = False
@@ -107,7 +108,7 @@ class DamageText(pygame.sprite.Sprite):
     if self.counter > 30:
       self.kill()
 
-player = Character(100, 100, 100, mob_animations, 0)
+player = Character(400, 300, 100, mob_animations, 0)
 enemy = Character(200, 300, 100, mob_animations, 1)
 bow = Weapon(bow_image, arrow_image)
 
@@ -140,7 +141,8 @@ while run:
   if moving_down == True:
     dy = constants.SPEED
   
-  player.move(dx, dy)
+  screen_scroll = player.move(dx, dy)
+  print(screen_scroll)
   
   for enemy in enemy_list:
     enemy.update()
