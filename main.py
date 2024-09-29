@@ -144,6 +144,7 @@ while run:
   screen_scroll = player.move(dx, dy)
   print(screen_scroll)
   
+  world.update(screen_scroll)
   for enemy in enemy_list:
     enemy.update()
   player.update()
