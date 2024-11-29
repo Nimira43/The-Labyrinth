@@ -115,6 +115,7 @@ enemy = Character(300, 300, 100, mob_animations, 1)
 bow = Weapon(bow_image, arrow_image)
 
 enemy_list = []
+
 enemy_list.append(enemy)
 damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
